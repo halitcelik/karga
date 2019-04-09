@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+
+{% block karga_main %}
+
+
+    <main class="main-flex flex">
+        {% for recipe in recipes %}
+            <p>{{recipe.0}}</p>
+        <div class="recipe-grid-block grid-block">
+            <div>
+            </div>
+            <a href="" >
+                <div class="recipe-info-box">
+                    <h2>{{recipe.name}}</h2>
+                    {% if recipe.image %}
+                        <img src="{{recipe.image.url}}">
+                    {% endif %}
+
+                    <hr>
+
+                    <p>Kisa Açiklama: {{recipe.short_description}}</p>
+                    {% if recipe.difficulty %}
+                        <p>Zorluk Derecesi: {{recipe.difficulty}}</p>
+                    {% else %}
+                        <p>Zorluk Derecesi: Belirtilmedi</p>
+                    {% endif %}
+                    {% if recipe.original_gravity_sg %}
+                        <p>Baslangiç Ozkutlesi: {{recipe.original_gravity_sg}}</p>
+                    {% elif recipe.original_gravity_plato %}
+                        <p>Baslangiç Ozkutlesi: {{recipe.original_gravity_plato}}</p>
+                    {% else %}
+                        <p>Baslangiç Ozkutlesi: Belirtilmedi</p>
+                    {% endif %}
+                    {% if recipe.final_gravity_sg %}
+                        <p>Son Ozkutle: {{recipe.final_gravity_sg}}</p>
+                    {% else %}
+                        <p>Son Ozkutle: Belirtilmedi</p>
+                    {% endif %}
+                    {% if recipe.abv %}
+                        <p>Alkol Seviyesi: {{recipe.abv}}</p>
+                    {% else %}
+                        <p>Alkol Seviyesi: Belirtilmedi</p>
+                    {% endif %}
+                    <p>Serbetçiotu:
+                    {% for hop in recipe.hops.all %}
+                         {% if forloop.counter != 1 %},{% endif %}   {{hop}}
+                    {% endfor %}
+                    </p>
+                </div>
+            </a>
+
+            </div>
+
+        {% endfor %}
+    </main>
+
+{% endblock karga_main %}

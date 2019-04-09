@@ -1,0 +1,80 @@
+{% extends "base.html" %} {% load staticfiles %}
+    {% block karga_add %}
+            <form action="/add-recipe/" method="post" enctype="multipart/form-data">
+                <div class="recipe-block parent">
+                    {% csrf_token %}
+
+                    <div class="select-field-wrapper child">
+                        {% for field in recipe_form %}
+                            {% if field.field.widget.input_type == 'select' %}
+                                {{ field.label_tag }}{{ field }}
+                            {% endif %}
+                        {% endfor %}
+                        <div id="hop-block" class="hop-block">
+                            {% for field in hop_type_form %}
+                                {% if field.field.widget.input_type == 'select' %}
+                                    <div class="hop-select">
+                                        {{field.label_tag}}{{field}}
+                                    </div>
+                                {% else %}
+                                    <div class="number-inputs">
+                                        {% if field.field.widget.input_type == 'number' %}
+                                            {{field.label_tag}}{{field}}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button id="add-hop">Add more</button>
+
+                    </div>
+
+                    {% comment %}
+                        forloop.counter is based on the entire number of loops.
+                        Not only "input_type==number"
+                    {% endcomment %}
+                    <div class="text-field-wrapper child">
+                        <div class="radio-button-block">
+                            <h3>Özkütle ölçüm tipi</h3>
+                            <label for="gravity-type-selector">Plato</label>
+                            <input type="radio" id="plato" name="gravity-type-selector" value="plato">
+                            <label for="gravity-type-selector">SG</label>
+                            <input type="radio" id="sg" name="gravity-type-selector" value="sg">
+                        </div>
+                        {% for field in recipe_form %}
+                            {{ field.errors }}
+                            {% if field.field.widget.input_type == 'number' %}
+                                {% if forloop.counter <= 6 %}
+                                    {{ field.label_tag }}{{ field }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="text-field-wrapper child">
+                        {% for field in recipe_form %}
+                            {{ field.errors }}
+                            {% if field.field.widget.input_type == 'number' %}
+                                {% if forloop.counter > 6 %}
+                                    {{ field.label_tag }}{{ field }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="number-field-wrapper child">
+                        {% for field in recipe_form %}
+                            {{ field.errors }}
+                            {% if field.field.widget.input_type in 'text' %}
+                                {{ field.label_tag }}{{ field }}
+                            {% endif %}
+                        {% endfor %}
+                        <label>Long description:</label>
+                        <input type="textarea" name="">
+                    </div>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+            {% block script %}
+                <script src="{% static 'js/main.js'%}"></script>
+            {% endblock script %}
+    {% endblock karga_add %}
+

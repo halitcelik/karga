@@ -1,0 +1,21 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Karga</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/add-recipe/"><button class="recipe-button button">Add Recipe</button></a>
+        </nav>
+    </header>
+    {% block karga_add %}{% endblock karga_add %}
+    {% block karga_main %}{% endblock karga_main %}
+    {% block karga_thanks %}{% endblock karga_thanks %}
+    {% block karga_details %}{% endblock karga_details %}
+
+</body>
+</html>
+
